@@ -4,13 +4,15 @@
 export NUMBEREVENTS=50
 
 # Define workdir
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test6
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/testcommit2
 
-# Define gridpack location
+# Define gridpack location, warning if you are using crab, requires global accessible gridpack
+# If running locally you can also set a local gridpack location
 export GRIDPACKLOC=/afs/cern.ch/work/m/mharrend/public/ttHtranche3/TTToSemiLepton_hvq_ttHtranche3.tgz
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
-#export USECRAB="True"
+export USECRAB="True"
+#export USECRAB="False"
 
 ######### Do not change anything behind this line ###############
 
@@ -33,23 +35,22 @@ cd CMSSW_7_1_25/src
 eval `scramv1 runtime -sh`
 echo "Loaded CMSSW_7_1_25"
 
-echo "Copy gridpack for production to workdir"
-cp $GRIDPACKLOC gridpack.tgz
-
 echo "Copy run script to workdir"
-cp $STARTDIR/run_generic_tarball_cvmfs_modified.sh .
+mkdir -p GeneratorInterface/LHEInterface/data/
+cp $STARTDIR/run_generic_tarball_cvmfs.sh GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
-echo "Copy cmssw python config to workdir"
-sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/pythonLHEGEN_cfg.py > ./pythonLHEGEN_cfg.py
-
-
-echo "Scram b and start of LHEGEN production"
-scram b -j 4
+sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/pythonLHEGEN_cfg_draft.py > ./pythonLHEGEN_cfg_eventsInserted.py
 
 if [ $USECRAB = "True" ]; then
 	echo "Will use crab submission, adjust crabconfig.py accordingly if problems arise"
+
+	echo "Add gridpack location to python config and copy cmssw python config to workdir"
+	sed -e "s~#GRIDPACKLOCATION#~${GRIDPACKLOC}~g" ./pythonLHEGEN_cfg_eventsInserted.py > ./pythonLHEGEN_cfg.py
+
+	echo "Scram b and start of LHEGEN production"
+	scram b -j 4
 	
 	echo "Load crab environment, grid environment should be loaded manually in advance if necessary"
 	source /cvmfs/cms.cern.ch/crab3/crab.sh
@@ -63,6 +64,18 @@ if [ $USECRAB = "True" ]; then
 	echo "Finished with crab submission, check job status manually"
 else
 	echo "Will do local production using cmsRun"
+
+	echo "Copy gridpack for production to workdir"
+	cp $GRIDPACKLOC gridpack.tgz
+
+	echo "Add gridpack location to python config and copy cmssw python config to workdir"
+	export GRIDPACKWORKDIR=`pwd`
+	sed -e "s~#GRIDPACKLOCATION#~${GRIDPACKWORKDIR}/gridpack.tgz~g" ./pythonLHEGEN_cfg_eventsInserted.py > ./pythonLHEGEN_cfg.py
+
+	echo "Scram b and start of LHEGEN production"
+	scram b -j 4
+
 	cmsRun pythonLHEGEN_cfg.py
+
 	echo "Finished local production using cmsRun"
 fi

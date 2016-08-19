@@ -7,9 +7,6 @@
 # on frontier)
 #J.Bendavid
 
-#exit on first error
-set -e
-
 echo "   ______________________________________     "
 echo "         Running Generic Tarball/Gridpack     "
 echo "   ______________________________________     "
@@ -33,8 +30,8 @@ if [[ -d lheevent ]]
 fi
 mkdir lheevent; cd lheevent
 
-#untar the tarball directly from folder above
-tar -xaf ../${path} 
+#untar the tarball directly from cvmfs
+tar -xaf ${path} 
 
 #generate events (call for 1 core always for now until hooks to set number of cores are implemented upstream)
 ./runcmsgrid.sh $nevt $rnum 1
@@ -47,4 +44,5 @@ cd $LHEWORKDIR
 rm -rf lheevent
 
 exit 0
+
 
