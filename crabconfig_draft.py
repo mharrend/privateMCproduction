@@ -9,7 +9,7 @@ config.General.transferLogs = True
 config.section_("JobType")
 config.JobType.pluginName = 'PrivateMC'
 config.JobType.psetName = 'pythonLHEGEN_cfg.py'
-config.JobType.inputFiles = ['GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh']
+config.JobType.inputFiles = ['GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh', 'gridpack.tgz']
 config.JobType.disableAutomaticOutputCollection = False
 config.JobType.outputFiles = ['cmsgrid_final.lhe']
 

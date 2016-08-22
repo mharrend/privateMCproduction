@@ -46,8 +46,10 @@ sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/pythonLHEGEN_cfg_draft.py 
 if [ $USECRAB = "True" ]; then
 	echo "Will use crab submission, adjust crabconfig.py accordingly if problems arise"
 
+        echo "Copy gridpack for production to workdir, so that crab can transfer it also"
+        cp $GRIDPACKLOC gridpack.tgz
 	echo "Add gridpack location to python config and copy cmssw python config to workdir"
-	sed -e "s~#GRIDPACKLOCATION#~${GRIDPACKLOC}~g" ./pythonLHEGEN_cfg_eventsInserted.py > ./pythonLHEGEN_cfg.py
+	sed -e "s~#GRIDPACKLOCATION#~../gridpack.tgz~g" ./pythonLHEGEN_cfg_eventsInserted.py > ./pythonLHEGEN_cfg.py
 
 	echo "Scram b and start of LHEGEN production"
 	scram b -j 4
