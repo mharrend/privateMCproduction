@@ -4,7 +4,7 @@
 export NUMBEREVENTS=1000
 
 # Define workdir
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test2
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test3
 
 # Define gridpack location, warning if you are using crab, requires global accessible gridpack
 # If running locally you can also set a local gridpack location
