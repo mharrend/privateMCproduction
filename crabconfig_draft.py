@@ -16,7 +16,7 @@ config.JobType.outputFiles = ['cmsgrid_final.lhe']
 config.section_("Data")
 config.Data.outputPrimaryDataset = 'privateMCProductionLHEGEN'
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 100
+config.Data.unitsPerJob = 50
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = False
 config.Data.outputDatasetTag = 'eventLHEGEN'
