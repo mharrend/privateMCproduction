@@ -17,7 +17,7 @@ config.section_("Data")
 config.Data.outputPrimaryDataset = 'privateMCProductionLHEGEN'
 config.Data.splitting = 'EventBased'
 config.Data.unitsPerJob = 100
-config.Data.totalUnits = 1000
+config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = False
 config.Data.outputDatasetTag = 'eventLHEGEN'
 

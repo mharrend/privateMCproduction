@@ -4,7 +4,7 @@
 export NUMBEREVENTS=10
 
 # Define workdir
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/testcommit7
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test1
 
 # Define gridpack location, warning if you are using crab, requires global accessible gridpack
 # If running locally you can also set a local gridpack location
@@ -55,8 +55,10 @@ if [ $USECRAB = "True" ]; then
 	echo "Load crab environment, grid environment should be loaded manually in advance if necessary"
 	source /cvmfs/cms.cern.ch/crab3/crab.sh
 
-	echo "Copy crabconfig.py to workdir"
-	cp $STARTDIR/crabconfig.py .
+	echo "Change number of events in crab config to"
+	echo $NUMBEREVENTS
+	echo " and copy crabconfig.py to workdir"
+	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig.py
 
 	echo "Submit crab jobs"
 	crab submit crabconfig.py
