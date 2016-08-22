@@ -60,6 +60,9 @@ if [ $USECRAB = "True" ]; then
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig.py
 
+        echo "Scram b and start of LHEGEN production"
+        scram b -j 4
+
 	echo "Submit crab jobs"
 	crab submit crabconfig.py
 
