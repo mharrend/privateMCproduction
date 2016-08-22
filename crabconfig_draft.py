@@ -15,7 +15,7 @@ config.JobType.disableAutomaticOutputCollection = False
 config.section_("Data")
 config.Data.outputPrimaryDataset = 'privateMCProductionLHEGEN'
 config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 50
+config.Data.unitsPerJob = 1200
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = False
 config.Data.outputDatasetTag = 'eventLHEGEN'
