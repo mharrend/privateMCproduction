@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=50
+export NUMBEREVENTS=10
 
 # Define workdir
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/testcommit2
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/testcommit7
 
 # Define gridpack location, warning if you are using crab, requires global accessible gridpack
 # If running locally you can also set a local gridpack location
