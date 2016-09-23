@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Define number of events
 export NUMBEREVENTS=12000
 

@@ -9,16 +9,15 @@ config.General.transferLogs = True
 config.section_("JobType")
 config.JobType.pluginName = 'PrivateMC'
 config.JobType.psetName = 'pythonLHEGEN_cfg.py'
-config.JobType.inputFiles = ['GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh', 'gridpack.tgz']
 config.JobType.disableAutomaticOutputCollection = False
 
 config.section_("Data")
-config.Data.outputPrimaryDataset = 'privateMCProductionLHEGEN'
+config.Data.outputPrimaryDataset = 'privateMCProductionAODSIM'
 config.Data.splitting = 'EventBased'
 config.Data.unitsPerJob = 1200
 config.Data.totalUnits = #NUMBEREVENTS#
-config.Data.publication = True
-config.Data.outputDatasetTag = 'eventLHEGEN'
+config.Data.publication = False
+config.Data.outputDatasetTag = 'eventAODSIM'
 
 config.section_("Site")
 config.Site.storageSite = 'T2_DE_DESY'
