@@ -5,7 +5,7 @@ export NUMBEREVENTS=12000
 
 # Define workdir
 #export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test4
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test7
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -66,19 +66,20 @@ else
 fi
 
 echo "Create file for blocking of second production using same input files"
-touch GenSimAlreadyUsed.txt
-echo $GENSIMLOC > GenSimAlreadyUsed.txt
+touch $STARTDIR/GenSimAlreadyUsed.txt
+echo $GENSIMLOC > $STARTDIR/GenSimAlreadyUsed.txt
 
 echo "Create list with files to process"
-find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'file:"{}"'," \; > filelist.txt
+find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'file:"{}"'," \; > filelist_draft.txt
 
 echo "Change file list in python config to"
+# Remove new lines in filelist
+cat filelist_draft.txt | tr -d "\n" > filelist.txt
 echo "##########"
 cat filelist.txt
+echo
 echo "##########"
-cat $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py > ./GenSimAODSim_step1_cfg_filesInserted.py
-cat filelist.txt >> ./GenSimAODSim_step1_cfg_filesInserted.py
-cat $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py >> ./GenSimAODSim_step1_cfg_filesInserted.py
+head -c -1 -q  $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
 
 
 echo "Change number of events in python config to"
@@ -94,7 +95,7 @@ if [ $USECRAB = "True" ]; then
 	scram b -j 4
 
 	echo "Load crab environment, grid environment should be loaded manually in advance if necessary"
-	source /cvmfs/cms.cern.ch/crab3/crab.sh
+	#source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 	echo "Change number of events in crab config to"
 	echo $NUMBEREVENTS
