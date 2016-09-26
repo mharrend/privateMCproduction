@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=12000
+export NUMBEREVENTS=5
 
 # Define workdir
 #export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test13
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test14
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -33,6 +33,7 @@ echo "Changed into workdir"
 
 echo "Install CMSSW in workdir"
 source /cvmfs/cms.cern.ch/cmsset_default.sh
+export SCRAM_ARCH=slc6_amd64_gcc530
 scram project CMSSW_8_0_14
 cd CMSSW_8_0_14/src
 eval `scramv1 runtime -sh`
@@ -74,7 +75,7 @@ find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'file:"{}"'," \; >
 
 echo "Change file list in python config to"
 # Remove new lines in filelist
-cat filelist_draft.txt | tr -d "\n" > filelist.txt
+cat filelist_draft.txt | tr -d "\n"| sed -e  's#/pnfs/desy.de/cms/tier2##g' > filelist.txt
 echo "##########"
 cat filelist.txt
 echo
