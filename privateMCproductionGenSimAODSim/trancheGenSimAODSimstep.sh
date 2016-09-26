@@ -4,7 +4,8 @@
 export NUMBEREVENTS=12000
 
 # Define workdir
-export WORKDIR=`pwd`
+#export WORKDIR=`pwd`
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test4
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -39,7 +40,7 @@ echo "Loaded CMSSW_8_0_14"
 
 echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in one of the subfolders"
 echo "If file is found, production will not be started. Please contact Andrej or Marco to clarify if this warning is unexpected, e.g. you did not produce DR event files yet."
-export ALREADYUSED=`find ~/test -name "GenSimAlreadyUsed.txt" -print`
+export ALREADYUSED=`find $GENSIMLOC -name "GenSimAlreadyUsed.txt" -print`
 if [ -z "$ALREADYUSED" ]; then
    echo $ALREADYUSED
    echo "Production can go on"
@@ -51,19 +52,34 @@ fi
 echo "Create file for blocking of second production using same input files"
 touch $GENSIMLOC/GenSimAlreadyUsed.txt
 
+
+echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in repository folder"
+echo "If file is found, production will not be started. Please contact Andrej or Marco to clarify if this warning is unexpected, e.g. you did not produce DR event files yet."
+export ALREADYUSED=`find . -name "GenSimAlreadyUsed.txt" -print`
+if [ -z "$ALREADYUSED" ]; then
+   echo $ALREADYUSED
+   echo "Production can go on"
+else
+    echo "GenSimAlreadyUsed.txt file was found. Since GenSim events were already used, production will not be started. Contact Andrej and Marco if you have questions."
+    echo "Check GenSimAlreadyUsed.txt file in this folder. If you want to give another GENSIMLOC than you used before it is safe to delete this file, but please make sure that nobody else used this GENSIMLOC before."
+    exit -1
+fi
+
+echo "Create file for blocking of second production using same input files"
+touch GenSimAlreadyUsed.txt
+echo $GENSIMLOC > GenSimAlreadyUsed.txt
+
 echo "Create list with files to process"
 find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'file:"{}"'," \; > filelist.txt
 
 echo "Change file list in python config to"
 echo "##########"
-filestring=""
-for f in $(cat filelist.txt):
-do
-    filestring=${filestring}' '${f}
-done
-echo $filestring
+cat filelist.txt
 echo "##########"
-sed -e "s|#INPUTFILES#|"${filestring:0:${#filestring}-2}"|g" $STARTDIR/GenSimAODSim_step1_cfg_draft.py > ./GenSimAODSim_step1_cfg_filesInserted.py
+cat $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py > ./GenSimAODSim_step1_cfg_filesInserted.py
+cat filelist.txt >> ./GenSimAODSim_step1_cfg_filesInserted.py
+cat $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py >> ./GenSimAODSim_step1_cfg_filesInserted.py
+
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
