@@ -7,7 +7,8 @@ config.General.workArea = 'crab_privateMCProduction'
 config.General.transferLogs = True
 
 config.section_("JobType")
-config.JobType.pluginName = 'PrivateMC'
+#config.JobType.pluginName = 'PrivateMC'
+config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'GenSimAODSim_step1_cfg.py'
 config.JobType.disableAutomaticOutputCollection = False
 config.JobType.scriptExe = 'jobScript.sh'
@@ -16,15 +17,11 @@ config.JobType.inputFiles = ['jobScript.sh', 'GenSimAODSim_step1_cfg.py', 'GenSi
 
 config.section_("Data")
 config.Data.outputPrimaryDataset = 'privateMCProductionAODSIMMiniAOD'
-config.Data.splitting = 'EventBased'
-config.Data.unitsPerJob = 800
+#config.Data.splitting = 'EventBased'
+config.Data.splitting = 'FileBased'
+#config.Data.unitsPerJob = 800
+config.Data.unitsPerJob = 1
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
 config.Data.outputDatasetTag = 'eventAODSIMMiniAOD'
-
-config.section_("Site")
-config.Site.storageSite = 'T2_DE_DESY'
-
-config.section_("User")
-config.User.voGroup = "dcms"
-
+config.Data.userInputFiles =[

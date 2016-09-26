@@ -5,7 +5,7 @@ export NUMBEREVENTS=12000
 
 # Define workdir
 #export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test8
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test13
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -55,7 +55,7 @@ touch $GENSIMLOC/GenSimAlreadyUsed.txt
 
 echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in repository folder"
 echo "If file is found, production will not be started. Please contact Andrej or Marco to clarify if this warning is unexpected, e.g. you did not produce DR event files yet."
-export ALREADYUSED=`find . -name "GenSimAlreadyUsed.txt" -print`
+export ALREADYUSED=`find $STARTDIR -name "GenSimAlreadyUsed.txt" -print`
 if [ -z "$ALREADYUSED" ]; then
    echo $ALREADYUSED
    echo "Production can go on"
@@ -81,12 +81,18 @@ echo
 echo "##########"
 head -c -1 -q  $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
 
+echo "Change file list in crab config"
+cat filelist.txt | sed -e  's#file:/pnfs/desy.de/cms/tier2##g' > filelist_crab.txt
+head -c -1 -q  $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
 sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" GenSimAODSim_step1_cfg_filesInserted.py > ./GenSimAODSim_step1_cfg.py
 sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/GenSimAODSim_step2_cfg_draft.py > ./GenSimAODSim_step2_cfg.py
 sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/GenSimAODSim_step3_cfg_draft.py > ./GenSimAODSim_step3_cfg.py
+
+echo "Copy jobScript.sh file to workdir"
+cp $STARTDIR/jobScript.sh ./jobScript.sh
 
 if [ $USECRAB = "True" ]; then
 	echo "Will use crab submission, adjust crabconfig.py accordingly if problems arise"
