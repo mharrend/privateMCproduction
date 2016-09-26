@@ -5,7 +5,7 @@ export NUMBEREVENTS=5
 
 # Define workdir
 #export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test15
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test16
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -71,7 +71,7 @@ touch $STARTDIR/GenSimAlreadyUsed.txt
 echo $GENSIMLOC > $STARTDIR/GenSimAlreadyUsed.txt
 
 echo "Create list with files to process"
-find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'"{}"'," \; > filelist_draft.txt
+find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'root://xrootd-cms.infn.it//"{}"'," \; > filelist_draft.txt
 
 echo "Change file list in python config to"
 # Remove new lines in filelist
