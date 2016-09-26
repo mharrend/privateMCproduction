@@ -5,7 +5,7 @@ export NUMBEREVENTS=12000
 
 # Define workdir
 #export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test7
+export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test8
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
@@ -95,7 +95,7 @@ if [ $USECRAB = "True" ]; then
 	scram b -j 4
 
 	echo "Load crab environment, grid environment should be loaded manually in advance if necessary"
-	#source /cvmfs/cms.cern.ch/crab3/crab.sh
+	source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 	echo "Change number of events in crab config to"
 	echo $NUMBEREVENTS
