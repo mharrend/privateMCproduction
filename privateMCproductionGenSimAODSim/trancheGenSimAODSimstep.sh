@@ -67,30 +67,32 @@ sed -e "s|#INPUTFILES#|"${filestring:0:${#filestring}-2}"|g" $STARTDIR/GenSimAOD
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
-sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" GenSimAODSim_step1_cfg_filesInserted.py > ./GenSimAODSim_step1_cfg_eventsInserted.py
-sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/GenSimAODSim_step2_cfg_draft.py > ./GenSimAODSim_step2_cfg_eventsInserted.py
+sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" GenSimAODSim_step1_cfg_filesInserted.py > ./GenSimAODSim_step1_cfg.py
+sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/GenSimAODSim_step2_cfg_draft.py > ./GenSimAODSim_step2_cfg.py
+sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/GenSimAODSim_step3_cfg_draft.py > ./GenSimAODSim_step3_cfg.py
 
 if [ $USECRAB = "True" ]; then
 	echo "Will use crab submission, adjust crabconfig.py accordingly if problems arise"
 
-        echo "Scram b and start of LHEGEN production"
+        echo "Scram b and start of GenSim to AODSim to MiniAOD production"
 	scram b -j 4
 
 	echo "Load crab environment, grid environment should be loaded manually in advance if necessary"
-	#source /cvmfs/cms.cern.ch/crab3/crab.sh
+	source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 	echo "Change number of events in crab config to"
 	echo $NUMBEREVENTS
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig.py
 
-        echo "Scram b and start of LHEGEN production"
+        echo "Scram b and start of GenSim to AODSim to MiniAOD production"
         scram b -j 4
 
 	echo "Submit crab jobs"
 	crab submit crabconfig.py
 
 	echo "Finished with crab submission, check job status manually"
+	echo "In the end you should get MiniAOD files."
 else
 	echo "Local production using cmsRun is not supported."
 	exit -1
