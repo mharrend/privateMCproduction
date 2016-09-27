@@ -7,6 +7,6 @@ cmsRun -e -j GenSimAODSim_step2.log GenSimAODSim_step2_cfg.py
 echo "================= CMSRUN finished Step 2 ====================" >> job.log
 
 echo "================= CMSRUN starting Step 3 ====================" >> job.log
-cmsRun -e -j GenSimAODSim_step3.log GenSimAODSim_step3_cfg.py
+cmsRun -e -j FrameworkJobReport.xml GenSimAODSim_step3_cfg.py
 echo "================= CMSRUN finished Step 3 ====================" >> job.log
 
