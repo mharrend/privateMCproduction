@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=5
+export NUMBEREVENTS=10000000
 
 # Define workdir
-#export WORKDIR=`pwd`
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test18
+export WORKDIR=`pwd`
+#export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test18
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
 # Furthermore, you have to give an absolute path name
-export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/husemann/privateMCProductionLHEGEN/eventLHEGEN/160822_162317
+export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/asaibel/privateMCProductionLHEGEN_Filtered_TTbb_PowPyt/eventLHEGEN
 
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
