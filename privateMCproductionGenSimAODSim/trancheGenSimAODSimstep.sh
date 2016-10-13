@@ -51,7 +51,7 @@ else
 fi
 
 echo "Create file for blocking of second production using same input files"
-touch $GENSIMLOC/GenSimAlreadyUsed.txt
+touch $WORKDIR/GenSimAlreadyUsed.txt
 
 
 echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in repository folder"
