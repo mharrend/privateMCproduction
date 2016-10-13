@@ -10,7 +10,7 @@ export WORKDIR=`pwd`
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
 # Furthermore, you have to give an absolute path name
-export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/asaibel/privateMCProductionLHEGEN_Filtered_TTbb_PowPyt/eventLHEGEN
+export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/kelmorab/privateMCProductionLHEGEN/eventLHEGEN/160823_114114
 
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
@@ -39,24 +39,10 @@ cd CMSSW_8_0_14/src
 eval `scramv1 runtime -sh`
 echo "Loaded CMSSW_8_0_14"
 
-echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in one of the subfolders"
-echo "If file is found, production will not be started. Please contact Andrej or Marco to clarify if this warning is unexpected, e.g. you did not produce DR event files yet."
-export ALREADYUSED=`find $GENSIMLOC -name "GenSimAlreadyUsed.txt" -print`
-if [ -z "$ALREADYUSED" ]; then
-   echo $ALREADYUSED
-   echo "Production can go on"
-else
-    echo "GenSimAlreadyUsed.txt file was found. Since GenSim events were already used, production will not be started. Contact Andrej and Marco if you have questions."
-    exit -1
-fi
-
-echo "Create file for blocking of second production using same input files"
-touch $WORKDIR/GenSimAlreadyUsed.txt
-
 
 echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in repository folder"
 echo "If file is found, production will not be started. Please contact Andrej or Marco to clarify if this warning is unexpected, e.g. you did not produce DR event files yet."
-export ALREADYUSED=`find $STARTDIR -name "GenSimAlreadyUsed.txt" -print`
+export ALREADYUSED=`grep "$GENSIMLOC" $STARTDIR/GenSimAlreadyUsed.txt`
 if [ -z "$ALREADYUSED" ]; then
    echo $ALREADYUSED
    echo "Production can go on"
