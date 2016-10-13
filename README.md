@@ -82,6 +82,14 @@ behind this line" according to your local setup.
 
 ###  Overview of files in framework
 * trancheGenSimAODSimstep.sh: Main steering script. Only script which should be edited by user.
-* run_generic_tarball_cvmfs.sh: Generic script to produce LHE events out of gridpacks
-* pythonLHEGEN_cfg_draft.py: CMSSW python run script
-* crabconfig_draft.py: Crab submission script, can be adjusted by user.
+* jobScript.sh: Script which combines the three necessary cmsRun steps to go from GenSim to MiniAOD in one step.
+* crabconfig_draft_part1.py: First part of crab submission script, can be adjusted by user.
+* crabconfig_draft_part2.py: Second part of crab submission script, the two parts will put together during the preprocessing steps.
+* GenSimAODSim_step1_cfg_draft_part1.py: First part of the first cmsRun step
+* GenSimAODSim_step1_cfg_draft_part2.py: Second part of the first cmsRun step, the two parts will be combined together after the input files is written into the config.
+* GenSimAODSim_step2_cfg_draft.py: Second cmsRun step, if one would stop after this step, one would have AODSim level events.
+* GenSimAODSim_step3_cfg_draft.py: Third cmsRun step, which generates MiniAOD samples out of the AODSim events.
+
+
+
+
