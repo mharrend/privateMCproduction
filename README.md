@@ -59,7 +59,7 @@ behind this line" according to your local setup.
   /pnfs/desy.de/cms/tier2/store/user/kelmorab/privateMCProductionLHEGEN/eventLHEGEN/
   ```
   You will send all the files of your storage and will break the xrootd system, the grid and will make many grid admins angry!
-  * For each GENSIMLOC folder use an individual crab job. You can check that a new crab job was created by checking the parameter config.General.requestName in the crabconfig_draft_part1.py file.
+  * For each GENSIMLOC folder use an individual crab job. You can check that a new crab job was created by checking the parameter config.General.requestName in the crabconfig_draft_part1.py file. It should contain the current date and time as part of the request name up to the minute.
   * Do not submit more than 10.000 jobs simultaneously since the crab scheduler cannot handle more than that.
   * Process per job only one file. Meaning do not change 
   
