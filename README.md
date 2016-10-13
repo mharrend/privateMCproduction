@@ -47,7 +47,7 @@ behind this line" according to your local setup.
 1. Navigate to the subfolder privateMCproductionGenSimAODSim
 1. Open the trancheGenSimAODSimstep.sh script contained in the folder
 1. Adjust the parameter GENSIMLOC and leave all the other parts untouched.
-1. **Important notes** before proceeding (you can break the grid otherwise, by mistake we did this already once), please read carefully:
+1. **Important notes** before proceeding (**you can break the grid otherwise**, by mistake we did this already once), please read carefully:
   * Use the **full path** to the GENSIMLOC folder, e.g.
   
   ```
@@ -78,7 +78,7 @@ behind this line" according to your local setup.
 1. Start the production via ./trancheGenSimAODSimstep.sh
 
 ### Important Notes
-* Make sure that you process an GenSim sample only once, otherwise you will have to exactly MiniAOD samples. In principle, the script should warn you if you try to do this. But take care anyway.
+* Make sure that you process an GenSim sample only once, otherwise you will have two exactly identical MiniAOD samples. In principle, the script should warn you if you try to do this. But take care anyway.
 
 ###  Overview of files in framework
 * trancheGenSimAODSimstep.sh: Main steering script. Only script which should be edited by user.
