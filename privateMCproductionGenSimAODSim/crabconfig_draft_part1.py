@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = "privateMCProductionAODSIM"
+config.General.requestName = "privateMCProductionAODSIM#REQUESTDATE#"
 config.General.workArea = 'crab_privateMCProduction'
 config.General.transferLogs = True
 
