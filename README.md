@@ -1,6 +1,24 @@
 # privateMCproduction
 Private MC production for CMS
 
+Table of Contents
+=================
+
+  * [privateMCproduction](#privatemcproduction)
+    * [Requirements](#requirements)
+    * [Recipe for LHEGENSIM level production](#recipe-for-lhegensim-level-production)
+      * [Overview](#overview)
+      * [Recipe](#recipe)
+      * [Notes](#notes)
+      * [Overview of files in framework](#overview-of-files-in-framework)
+    * [Recipe for MiniAOD level production](#recipe-for-miniaod-level-production)
+      * [Overview](#overview-1)
+      * [Recipe](#recipe-1)
+      * [Important Notes](#important-notes)
+      * [Overview of files in framework](#overview-of-files-in-framework-1)
+
+
+
 ## Requirements
 * CMSSW environment
 * Sufficient storage space -- either local or on a grid site
