@@ -12,7 +12,7 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'GenSimAODSim_step1_cfg.py'
 config.JobType.disableAutomaticOutputCollection = False
 config.JobType.scriptExe = 'jobScript.sh'
-config.JobType.outputFiles = ['MiniAOD.root', 'GenSimAODSim_step1.log', 'GenSimAODSim_step2.log', 'FrameworkJobReport.xml', 'job.log']
+config.JobType.outputFiles = ['MiniAOD.root','GenSimAODSim_step1.log', 'GenSimAODSim_step2.log', 'FrameworkJobReport.xml', 'job.log']
 config.JobType.inputFiles = ['jobScript.sh', 'GenSimAODSim_step1_cfg.py', 'GenSimAODSim_step2_cfg.py', 'GenSimAODSim_step3_cfg.py']
 
 config.section_("Data")
@@ -21,7 +21,7 @@ config.Data.outputPrimaryDataset = 'privateMCProductionAODSIMMiniAOD'
 config.Data.splitting = 'FileBased'
 #config.Data.unitsPerJob = 800
 config.Data.unitsPerJob = 1
-config.Data.totalUnits = #NUMBEREVENTS#
+#config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
 config.Data.outputDatasetTag = 'eventAODSIMMiniAOD'
 config.Data.userInputFiles =[
