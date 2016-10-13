@@ -54,7 +54,7 @@ fi
 
 echo "Create file for blocking of second production using same input files"
 touch $STARTDIR/GenSimAlreadyUsed.txt
-echo $GENSIMLOC > $STARTDIR/GenSimAlreadyUsed.txt
+echo $GENSIMLOC >> $STARTDIR/GenSimAlreadyUsed.txt
 
 echo "Create list with files to process"
 find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'root://xrootd-cms.infn.it//"{}"'," \; > filelist_draft.txt
