@@ -94,8 +94,7 @@ if [ $USECRAB = "True" ]; then
 	echo $NUMBEREVENTS
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
-	export REQUESTDATE=`date  +'%Y%m%d%H%m'`
-	sed -e "s/#REQUESTDATE#/${REQUESTDATE}/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
+	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
 
 
         echo "Scram b and start of GenSim to AODSim to MiniAOD production"
