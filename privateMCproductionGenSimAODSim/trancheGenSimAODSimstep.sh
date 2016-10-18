@@ -10,7 +10,7 @@ export WORKDIR=`pwd`
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
 # Furthermore, you have to give an absolute path name
-export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/kelmorab/privateMCProductionLHEGEN/eventLHEGEN/160823_114114
+export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/mharrend/privateMCProductionLHEGEN/eventLHEGEN/160822_154907
 
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
@@ -94,9 +94,10 @@ if [ $USECRAB = "True" ]; then
 	echo $NUMBEREVENTS
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
-	export REQUESTDATE=`date  +'%Y%m%d%H%m'`
-	sed -e "s/#REQUESTDATE#/${REQUESTDATE}/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
+#	export REQUESTDATE=`date  +'%Y%m%d%H%m'`
+	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
 
+	exit 0
 
         echo "Scram b and start of GenSim to AODSim to MiniAOD production"
         scram b -j 4
