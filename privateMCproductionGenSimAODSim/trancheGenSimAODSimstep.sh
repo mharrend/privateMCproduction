@@ -96,8 +96,6 @@ if [ $USECRAB = "True" ]; then
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
 	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
 
-	exit 0
-
         echo "Scram b and start of GenSim to AODSim to MiniAOD production"
         scram b -j 4
 
