@@ -34,10 +34,10 @@ echo "Changed into workdir"
 echo "Install CMSSW in workdir"
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export SCRAM_ARCH=slc6_amd64_gcc530
-scram project CMSSW_8_0_14
-cd CMSSW_8_0_14/src
+scram project CMSSW_8_0_21
+cd CMSSW_8_0_21/src
 eval `scramv1 runtime -sh`
-echo "Loaded CMSSW_8_0_14"
+echo "Loaded CMSSW_8_0_21"
 
 
 echo "Make sure that GenSim event files are not used twice by checking if a GenSimAlreadyUsed.txt file exists in repository folder"

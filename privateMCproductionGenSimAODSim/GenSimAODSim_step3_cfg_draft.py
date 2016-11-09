@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein file:step2.root --fileout file:step3.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 80X_mcRun2_asymptotic_v14 --step PAT --era Run2_2016 --python_filename GenSim_step3.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 10
+# with command line options: step1 --filein dbs:/ZPrimeToEMu_M_800_TuneCUETP8M1_13TeV_pythia8/RunIISummer16DR80Premix-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/AODSIM --fileout file:EXO-RunIISummer16MiniAODv2-00003.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --step PAT --nThreads 1 --era Run2_2016 --python_filename EXO-RunIISummer16MiniAODv2-00003_1_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 10
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -63,7 +63,7 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_v14', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_TrancheIV_v6', '')
 
 # Path and EndPath definitions
 process.Flag_trackingFailureFilter = cms.Path(process.goodVertices+process.trackingFailureFilter)
@@ -93,6 +93,10 @@ process.MINIAODSIMoutput_step = cms.EndPath(process.MINIAODSIMoutput)
 
 # Schedule definition
 process.schedule = cms.Schedule(process.Flag_HBHENoiseFilter,process.Flag_HBHENoiseIsoFilter,process.Flag_CSCTightHaloFilter,process.Flag_CSCTightHaloTrkMuUnvetoFilter,process.Flag_CSCTightHalo2015Filter,process.Flag_globalTightHalo2016Filter,process.Flag_globalSuperTightHalo2016Filter,process.Flag_HcalStripHaloFilter,process.Flag_hcalLaserEventFilter,process.Flag_EcalDeadCellTriggerPrimitiveFilter,process.Flag_EcalDeadCellBoundaryEnergyFilter,process.Flag_goodVertices,process.Flag_eeBadScFilter,process.Flag_ecalLaserCorrFilter,process.Flag_trkPOGFilters,process.Flag_chargedHadronTrackResolutionFilter,process.Flag_muonBadTrackFilter,process.Flag_trkPOG_manystripclus53X,process.Flag_trkPOG_toomanystripclus53X,process.Flag_trkPOG_logErrorTooManyClusters,process.Flag_METFilters,process.endjob_step,process.MINIAODSIMoutput_step)
+
+#Setup FWK for multithreaded
+process.options.numberOfThreads=cms.untracked.uint32(1)
+process.options.numberOfStreams=cms.untracked.uint32(0)
 
 # customisation of the process.
 

@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step2 --filein file:GenSimAODSim_step1.root --fileout file:AODSim.root --mc --eventcontent AODSIM,DQM --runUnscheduled --datatier AODSIM,DQMIO --conditions 80X_mcRun2_asymptotic_v14 --step RAW2DIGI,RECO,EI,DQM:DQMOfflinePOGMC --nThreads 4 --era Run2_2016 --python_filename GenSimAODSim_step2_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 960
+# with command line options: step2 --filein file:EXO-RunIISummer16DR80Premix-00004_step1.root --fileout file:EXO-RunIISummer16DR80Premix-00004.root --mc --eventcontent AODSIM --runUnscheduled --datatier AODSIM --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --step RAW2DIGI,RECO,EI --nThreads 4 --era Run2_2016 --python_filename EXO-RunIISummer16DR80Premix-00004_2_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 960
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -20,7 +20,7 @@ process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.Reconstruction_cff')
 process.load('CommonTools.ParticleFlow.EITopPAG_cff')
-process.load('DQMOffline.Configuration.DQMOfflineMC_cff')
+process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
@@ -58,33 +58,21 @@ process.AODSIMoutput = cms.OutputModule("PoolOutputModule",
     outputCommands = process.AODSIMEventContent.outputCommands
 )
 
-process.DQMoutput = cms.OutputModule("DQMRootOutputModule",
-    dataset = cms.untracked.PSet(
-        dataTier = cms.untracked.string('DQMIO'),
-        filterName = cms.untracked.string('')
-    ),
-    fileName = cms.untracked.string('file:AODSim_inDQM.root'),
-    outputCommands = process.DQMEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
-)
-
 # Additional output definition
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_v14', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_TrancheIV_v6', '')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
 process.reconstruction_step = cms.Path(process.reconstruction)
 process.eventinterpretaion_step = cms.Path(process.EIsequence)
-process.dqmoffline_step = cms.Path(process.DQMOfflinePOGMC)
-process.dqmofflineOnPAT_step = cms.Path(process.DQMOfflinePOGMC)
+process.endjob_step = cms.EndPath(process.endOfProcess)
 process.AODSIMoutput_step = cms.EndPath(process.AODSIMoutput)
-process.DQMoutput_step = cms.EndPath(process.DQMoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.raw2digi_step,process.reconstruction_step,process.eventinterpretaion_step,process.dqmoffline_step,process.dqmofflineOnPAT_step,process.AODSIMoutput_step,process.DQMoutput_step)
+process.schedule = cms.Schedule(process.raw2digi_step,process.reconstruction_step,process.eventinterpretaion_step,process.endjob_step,process.AODSIMoutput_step)
 
 #Setup FWK for multithreaded
 process.options.numberOfThreads=cms.untracked.uint32(1)
