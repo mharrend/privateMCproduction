@@ -1,5 +1,9 @@
-# privateMCproduction
+# privateMCproduction for Moriond2017
 Private MC production for CMS
+
+## Note: Moriond2017 settings
+**Note**
+This configuration is using the settings which are used for the Moriond2017 production. 
 
 Table of Contents
 =================
