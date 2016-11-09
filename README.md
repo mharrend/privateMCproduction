@@ -2,7 +2,7 @@
 Private MC production for CMS
 
 ## Note: HC2016 settings
-** Note**
+**Note**
 This configuration is using the settings which were used for the HC2016 production. 
 
 Table of Contents
