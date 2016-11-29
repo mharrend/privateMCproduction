@@ -96,12 +96,6 @@ behind this line" according to your local setup.
   ```
   in the crabconfig_draft_part1.py file.
   * The processing of 100 events will take roughly 40 to 60 minutes, while each GenSim sample file should contain roughly 1000 to 1200 events. Meaning your single jobs will take roughly 10 hours.
-  * Make sure, that the crab jobs are processed on the local Tier site where the GenSim samples are stored. In our case T2_DE_DESY. Otherwise your jobs will heavily use xrootd and the grid supervisors will hate you. You can change the Tier site used for the computation by
-  
-  ```
-  config.Site.whitelist = ['T2_DE_DESY']
-  ```
-  in the crabconfig_draft_part2.py file.
 1. Start the production via ./trancheGenSimAODSimstep.sh
 
 ### Important Notes
