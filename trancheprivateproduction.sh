@@ -61,7 +61,10 @@ if [ $USECRAB = "True" ]; then
 	echo "Change number of events in crab config to"
 	echo $NUMBEREVENTS
 	echo " and copy crabconfig.py to workdir"
-	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig.py
+	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
+	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig.py
+
+	
 
         echo "Scram b and start of LHEGEN production"
         scram b -j 4
