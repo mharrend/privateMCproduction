@@ -27,5 +27,6 @@ config.Site.storageSite = 'T2_CN_Beijing'
 config.Site.whitelist = ['T2_*']
 
 config.section_("User")
+## only german users
 #config.User.voGroup = "dcms"
 
