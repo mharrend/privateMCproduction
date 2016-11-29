@@ -3,7 +3,11 @@ Private MC production for CMS
 
 ## Note: Moriond2017 settings
 **Note**
-This configuration is using the settings which are used for the Moriond2017 production. 
+This configuration is using the settings which are used for the Moriond2017 production.
+
+## Note: DESY
+** Note **
+This configuration writes the files to the DESY storage.
 
 Table of Contents
 =================
