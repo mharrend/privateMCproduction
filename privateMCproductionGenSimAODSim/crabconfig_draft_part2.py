@@ -9,5 +9,6 @@ config.Site.whitelist = ['T2_*']
 ## T3 Beijing
 
 config.section_("User")
-config.User.voGroup = "dcms"
+## Only german users
+#config.User.voGroup = "dcms"
 
