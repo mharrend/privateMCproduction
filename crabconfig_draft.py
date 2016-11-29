@@ -27,5 +27,5 @@ config.Site.storageSite = 'T2_CN_Beijing'
 config.Site.whitelist = ['T2_*']
 
 config.section_("User")
-config.User.voGroup = "dcms"
+#config.User.voGroup = "dcms"
 
