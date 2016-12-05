@@ -5,12 +5,11 @@ export NUMBEREVENTS=10000000
 
 # Define workdir
 export WORKDIR=`pwd`
-#export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/test18
 
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
 # Furthermore, you have to give an absolute path name
-export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/mharrend/privateMCProductionLHEGEN/eventLHEGEN/160822_154907
+export GENSIMLOC=/privateMCProductionLHEGEN/mharrend-eventLHEGEN-TTToSemiLepton_hvq_ttHtranche3-962bade98c5fada66831bc83bbc241c7/USER
 
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
@@ -56,20 +55,7 @@ echo "Create file for blocking of second production using same input files"
 touch $STARTDIR/GenSimAlreadyUsed.txt
 echo $GENSIMLOC >> $STARTDIR/GenSimAlreadyUsed.txt
 
-echo "Create list with files to process"
-find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'root://xrootd-cms.infn.it//"{}"'," \; > filelist_draft.txt
-
-echo "Change file list in python config to"
-# Remove new lines in filelist
-cat filelist_draft.txt | tr -d "\n"| sed -e  's#/pnfs/desy.de/cms/tier2##g' > filelist.txt
-echo "##########"
-cat filelist.txt
-echo
-echo "##########"
-head -c -1 -q  $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
-
-echo "Change file list in crab config"
-cat filelist.txt | sed -e  's#file:/pnfs/desy.de/cms/tier2##g' > filelist_crab.txt
+echo $GENSIMLOC > filelist_crab.txt
 head -c -1 -q  $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
 
 echo "Change number of events in python config to"
@@ -95,7 +81,12 @@ if [ $USECRAB = "True" ]; then
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
 	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig_dateInserted.py
-	sed -e "s/#WHOAMI#/`whoami`/g" ./crabconfig_dateInserted.py > ./crabconfig.py
+	sed -e "s/#WHOAMI#/`whoami`/g" ./crabconfig_dateInserted.py > ./crabconfig_UserInserted.py
+
+	export BASENAMEREPLACEFULL=`echo $GENSIMLOC | grep -o 'eventLHEGEN-[A-Za-Z_0-9]*'`
+	export BASENAMEREPLACE=${BASENAMEREPLACEFULL:13}
+	sed -e "s/#BASENAME#/${BASENAMEREPLACE}/g" ./crabconfig_UserInserted.py > ./crabconfig.py
+
 
         echo "Scram b and start of GenSim to AODSim to MiniAOD production"
         scram b -j 4

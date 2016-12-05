@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=400000
+export NUMBEREVENTS=380000
 
 # Define workdir
-export WORKDIR=/nfs/dust/cms/user/mharrend/trancheprivateproduction/start1
+export WORKDIR=`pwd`
 
 # Define gridpack location, warning if you are using crab, requires global accessible gridpack
 # If running locally you can also set a local gridpack location
@@ -63,7 +63,10 @@ if [ $USECRAB = "True" ]; then
 	echo " and copy crabconfig.py to workdir"
 	sed -e "s/#NUMBEREVENTS#/${NUMBEREVENTS}/g" $STARTDIR/crabconfig_draft.py > ./crabconfig_eventsInserted.py
 	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig_dateInserted.py
-	sed -e "s/#WHOAMI#/`whoami`/g" ./crabconfig_dateInserted.py > ./crabconfig.py
+	sed -e "s/#WHOAMI#/`whoami`/g" ./crabconfig_dateInserted.py > ./crabconfig_UserInserted.py
+
+	export BASENAMEREPLACE=$(basename ${GRIDPACKLOC%.*})
+	sed -e "s/#BASENAME#/${BASENAMEREPLACE}/g" ./crabconfig_UserInserted.py > ./crabconfig.py
 	
 
         echo "Scram b and start of LHEGEN production"

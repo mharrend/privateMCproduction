@@ -18,7 +18,7 @@ config.Data.splitting = 'EventBased'
 config.Data.unitsPerJob = 1200
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
-config.Data.outputDatasetTag = 'eventLHEGEN'
+config.Data.outputDatasetTag = 'eventLHEGEN-#BASENAME#'
 config.Data.outLFNDirBase = '/store/group/phys_higgs'
 
 config.section_("Site")
