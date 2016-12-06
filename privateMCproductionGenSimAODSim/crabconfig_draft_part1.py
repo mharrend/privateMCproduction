@@ -25,6 +25,7 @@ config.Data.unitsPerJob = 1
 #config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
 config.Data.outputDatasetTag = 'eventAODSIMMiniAOD-#BASENAME#'
+config.Data.inputDBS = 'phys3'
 ## T3 Beijing
 config.Data.ignoreLocality = True
 config.Data.outLFNDirBase = '/store/group/phys_higgs'
