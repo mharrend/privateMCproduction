@@ -24,7 +24,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 #config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
-config.Data.outputDatasetTag = 'eventAODSIMMiniAOD'
+config.Data.outputDatasetTag = 'eventAODSIMMiniAOD--TToSemiLepton_hvq_ttHtranche3'
 ## T3 Beijing
 #config.Data.ignoreLocality = True
 #config.Data.outLFNDirBase = '/store/group/phys_higgs'
