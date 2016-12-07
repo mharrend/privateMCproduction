@@ -5,9 +5,9 @@ Private MC production for CMS
 **Note**
 This configuration is using the settings which are used for the Moriond2017 production. 
 
-## Note: T2_Beijing
+## Note: T3_US_FNALLPC
 **Note**
-This configuration writes the files to the T3_Beijing storage.
+This configuration writes the files to the T3_US_FNALLPC storage.
 
 Table of Contents
 =================
