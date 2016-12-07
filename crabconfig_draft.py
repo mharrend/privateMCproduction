@@ -19,14 +19,8 @@ config.Data.unitsPerJob = 1200
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
 config.Data.outputDatasetTag = 'eventLHEGEN-#BASENAME#'
-config.Data.outLFNDirBase = '/store/group/phys_higgs'
+config.Data.outLFNDirBase = '/store/group/lpctthrun2/'
 
 config.section_("Site")
-#config.Site.storageSite = 'T2_DE_DESY'
-config.Site.storageSite = 'T2_CN_Beijing'
-config.Site.whitelist = ['T2_*']
-
-config.section_("User")
-## only german users
-#config.User.voGroup = "dcms"
+config.Site.storageSite = 'T3_US_FNALLPC'
 
