@@ -106,7 +106,7 @@ if [ $USECRAB = "True" ]; then
         scram b -j 4
 
 	echo "Submit crab jobs"
-#	crab submit crabconfig.py
+	crab submit crabconfig.py
 
 	echo "Finished with crab submission, check job status manually"
 	echo "In the end you should get MiniAOD files."
