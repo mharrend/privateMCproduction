@@ -74,18 +74,17 @@ behind this line" according to your local setup.
 1. Open the trancheGenSimAODSimstep.sh script contained in the folder
 1. Adjust the parameter GENSIMLOC and leave all the other parts untouched.
 1. **Important notes** before proceeding (**you can break the grid otherwise**, by mistake we did this already once), please read carefully:
-  * Use the **full path** to the GENSIMLOC folder, e.g.
+  * Use the **DAS dataset name** as GENSIMLOC location, e.g.
   
   ```
-  /pnfs/desy.de/cms/tier2/store/user/kelmorab/privateMCProductionLHEGEN/eventLHEGEN/160823_114114
+  /privateMCProductionLHEGEN/satoshi-eventLHEGEN-TTToSemiLepton_hvq_ttHtranche3-962bade98c5fada66831bc83bbc241c7/USER
   ```
-  In **no cases** use the shortened path
+  This dataset name can be obtained via
   
   ```
-  /pnfs/desy.de/cms/tier2/store/user/kelmorab/privateMCProductionLHEGEN/eventLHEGEN/
+  https://cmsweb.cern.ch/das/request?view=list&instance=prod%2Fphys03&input=dataset%3D%2F*privateMCProduction*%2F*%2FUSER
   ```
-  You will send all the files of your storage and will break the xrootd system, the grid and will make many grid admins angry!
-  * For each GENSIMLOC folder an individual crab job will be created which should contain the current date and time as part of the request name up to the minute.
+  
   * Make sure that you process an GenSim sample only once, otherwise you will have two exactly identical MiniAOD samples. In principle, the script should warn you if you try to do this. But take care anyway.
   * Do not submit more than 10.000 jobs simultaneously since the crab scheduler cannot handle more than that.
   * Process per job only one file. Meaning do not change 
