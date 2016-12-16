@@ -11,6 +11,7 @@ export WORKDIR=`pwd`
 # Furthermore, you have to give an absolute path name
 export GENSIMLOC=/privateMCProductionLHEGEN/mharrend-eventLHEGEN-TTToSemiLepton_hvq_ttHtranche3-962bade98c5fada66831bc83bbc241c7/USER
 
+export BASENAMEREPLACE=TTToSemiLepton_hvq_ttHtranche3-KIT1
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
 # Use of crab is necessary so far
@@ -55,6 +56,18 @@ echo "Create file for blocking of second production using same input files"
 touch $STARTDIR/GenSimAlreadyUsed.txt
 echo $GENSIMLOC >> $STARTDIR/GenSimAlreadyUsed.txt
 
+echo "Create list with files to process"
+find $GENSIMLOC -name "eventLHEGEN-output_*.root" -exec echo "'root://xrootd-cms.infn.it//"{}"'," \; > filelist_draft.txt
+
+echo "Change file list in python config to"
+# Remove new lines in filelist
+cat filelist_draft.txt | tr -d "\n"| sed -e  's#/pnfs/desy.de/cms/tier2##g' > filelist.txt
+echo "##########"
+cat filelist.txt
+echo
+echo "##########"
+head -c -1 -q $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
+
 echo $GENSIMLOC > filelist_crab.txt
 head -c -1 -q  $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
 
@@ -83,8 +96,8 @@ if [ $USECRAB = "True" ]; then
 	sed -e "s/#REQUESTDATE#/`date  +'%Y%m%d%H%m%s'`/g" ./crabconfig_eventsInserted.py > ./crabconfig_dateInserted.py
 	sed -e "s/#WHOAMI#/`whoami`/g" ./crabconfig_dateInserted.py > ./crabconfig_UserInserted.py
 
-	export BASENAMEREPLACEFULL=`echo $GENSIMLOC | grep -o 'eventLHEGEN-[A-Za-z_0-9]*'`
-	export BASENAMEREPLACE=${BASENAMEREPLACEFULL:13}
+	#export BASENAMEREPLACEFULL=`echo $GENSIMLOC | grep -o 'eventLHEGEN-[A-Za-z_0-9]*'`
+	#export BASENAMEREPLACE=${BASENAMEREPLACEFULL:13}
 	sed -e "s/#BASENAME#/${BASENAMEREPLACE}/g" ./crabconfig_UserInserted.py > ./crabconfig.py
 
 
