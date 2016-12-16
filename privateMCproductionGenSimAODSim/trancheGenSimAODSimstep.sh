@@ -9,7 +9,7 @@ export WORKDIR=`pwd`
 # Define location of GenSim samples, warning make sure that you run only one time on the same folder since otherwise we will produce two times the events.
 # You will get an error message if you try to reuse some of the input files, so please make sure that you start this production only after all GenSim events are produced.
 # Furthermore, you have to give an absolute path name
-export GENSIMLOC=/privateMCProductionLHEGEN/mharrend-eventLHEGEN-TTToSemiLepton_hvq_ttHtranche3-962bade98c5fada66831bc83bbc241c7/USER
+export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/mharrend/privateMCProductionLHEGEN/eventLHEGEN/160822_154907
 
 export BASENAMEREPLACE=TTToSemiLepton_hvq_ttHtranche3-KIT1
 
