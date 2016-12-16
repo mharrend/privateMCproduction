@@ -11,7 +11,7 @@ export WORKDIR=`pwd`
 # Furthermore, you have to give an absolute path name
 export GENSIMLOC=/pnfs/desy.de/cms/tier2/store/user/mharrend/privateMCProductionLHEGEN/eventLHEGEN/160822_154907
 
-export BASENAMEREPLACE=TTToSemiLepton_hvq_ttHtranche3-KIT1
+export BASENAMEREPLACE=TTToSemiLepton_hvq_ttHtranche3-KIT1Test
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
 # Use of crab is necessary so far
@@ -68,8 +68,9 @@ echo
 echo "##########"
 head -c -1 -q $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
 
-echo $GENSIMLOC > filelist_crab.txt
-head -c -1 -q  $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
+echo "Change file list in crab config"
+cat filelist.txt | sed -e  's#file:/pnfs/desy.de/cms/tier2##g' > filelist_crab.txt
+head -c -1 -q $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
@@ -105,7 +106,7 @@ if [ $USECRAB = "True" ]; then
         scram b -j 4
 
 	echo "Submit crab jobs"
-	crab submit crabconfig.py
+#	crab submit crabconfig.py
 
 	echo "Finished with crab submission, check job status manually"
 	echo "In the end you should get MiniAOD files."

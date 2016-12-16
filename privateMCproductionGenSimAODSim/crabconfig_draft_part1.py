@@ -31,4 +31,3 @@ config.Data.ignoreLocality = True
 config.Data.outLFNDirBase = '/store/group/phys_higgs'
 ## T3 Beijing
 config.Data.userInputFiles =[
-#config.Data.inputDataset = ('

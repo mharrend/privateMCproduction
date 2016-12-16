@@ -1,4 +1,3 @@
-#')
 ]
 
 config.section_("Site")
