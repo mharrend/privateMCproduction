@@ -1,4 +1,4 @@
-    )),
+")),
     secondaryFileNames = cms.untracked.vstring()
 )
 
