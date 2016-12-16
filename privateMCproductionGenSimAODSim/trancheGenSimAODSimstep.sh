@@ -56,6 +56,7 @@ touch $STARTDIR/GenSimAlreadyUsed.txt
 echo $GENSIMLOC >> $STARTDIR/GenSimAlreadyUsed.txt
 
 echo $GENSIMLOC > filelist_crab.txt
+head -c -1 -q  $STARTDIR/GenSimAODSim_step1_cfg_draft_part1.py filelist_crab.txt $STARTDIR/GenSimAODSim_step1_cfg_draft_part2.py > ./GenSimAODSim_step1_cfg_filesInserted.py
 head -c -1 -q  $STARTDIR/crabconfig_draft_part1.py filelist_crab.txt $STARTDIR/crabconfig_draft_part2.py > $STARTDIR/crabconfig_draft.py
 
 echo "Change number of events in python config to"
