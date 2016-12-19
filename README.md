@@ -11,7 +11,7 @@ This configuration writes the files to the T2_CH_CSCS storage.
 
 ## Note: TTBB Sample
 **Note**
-This configuration produces ttbb events.
+This configuration produces ttbb filtered events making use of the inclusive POWHEG ttbar sample.
 
 Table of Contents
 =================
