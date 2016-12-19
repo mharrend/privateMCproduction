@@ -19,11 +19,12 @@ config.Data.unitsPerJob = 1200
 config.Data.totalUnits = #NUMBEREVENTS#
 config.Data.publication = True
 config.Data.outputDatasetTag = 'eventLHEGEN-#BASENAME#-#REQUESTDATE#'
-config.Data.outLFNDirBase = '/store/group/phys_higgs'
+#config.Data.outLFNDirBase = '/store/group/phys_higgs'
 
 config.section_("Site")
 #config.Site.storageSite = 'T2_DE_DESY'
-config.Site.storageSite = 'T2_CN_Beijing'
+#config.Site.storageSite = 'T2_CN_Beijing'
+config.Site.storageSite = 'T2_CH_CSCS'
 config.Site.whitelist = ['T2_*']
 
 config.section_("User")
