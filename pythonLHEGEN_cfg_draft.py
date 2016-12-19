@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/pythonLHEGEN.py --fileout file:eventLHEGEN-output.root --mc --eventcontent RAWSIM,LHE --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM,LHE --conditions MCRUN2_71_V1::All --beamspot Realistic50ns13TeVCollision --step LHE,GEN,SIM --magField 38T_PostLS1 --python_filename pythonLHEGEN_cfg.py --no_exec -n 100
+# with command line options: Configuration/GenProduction/python/HIG-RunIISummer15wmLHEGS-00597-fragment.py --fileout file:HIG-RunIISummer15wmLHEGS-00597.root --mc --eventcontent RAWSIM,LHE --customise SLHCUpgradeSimulations/Configuration/postLS1Customs.customisePostLS1,Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM,LHE --conditions MCRUN2_71_V1::All --beamspot Realistic50ns13TeVCollision --step LHE,GEN:ProductionFilterSequence,SIM --magField 38T_PostLS1 --python_filename HIG-RunIISummer15wmLHEGS-00597_1_cfg.py --no_exec -n 41
 import FWCore.ParameterSet.Config as cms
 
 process = cms.Process('SIM')
@@ -75,6 +75,75 @@ process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_71_V1::All', '')
 
+process.selectedHadronsAndPartons = cms.EDProducer("HadronAndPartonSelector",
+    particles = cms.InputTag("genParticles"),
+    src = cms.InputTag("generator"),
+    partonMode = cms.string('Auto')
+)
+
+
+process.genJetFlavourInfos = cms.EDProducer("JetFlavourClustering",
+    ghostRescaling = cms.double(1e-18),
+    partons = cms.InputTag("selectedHadronsAndPartons","partons"),
+    jetAlgorithm = cms.string('AntiKt'),
+    bHadrons = cms.InputTag("selectedHadronsAndPartons","bHadrons"),
+    rParam = cms.double(0.4),
+    jets = cms.InputTag("ak4GenJetsCustom"),
+    hadronFlavourHasPriority = cms.bool(True),
+    cHadrons = cms.InputTag("selectedHadronsAndPartons","cHadrons")
+)
+
+
+process.ttHFGenFilter = cms.EDFilter("ttHFGenFilter",
+    genBHadFlavour = cms.InputTag("matchGenBHadron","genBHadFlavour"),
+    genBHadFromTopWeakDecay = cms.InputTag("matchGenBHadron","genBHadFromTopWeakDecay"),
+    genBHadPlusMothers = cms.InputTag("matchGenBHadron","genBHadPlusMothers"),
+    genBHadIndex = cms.InputTag("matchGenBHadron","genBHadIndex"),
+    OnlyHardProcessBHadrons = cms.bool(False),
+    genBHadPlusMothersIndices = cms.InputTag("matchGenBHadron","genBHadPlusMothersIndices"),
+    genParticles = cms.InputTag("genParticles")
+)
+
+
+process.matchGenBHadron = cms.EDProducer("GenHFHadronMatcher",
+    jetFlavourInfos = cms.InputTag("genJetFlavourInfos"),
+    flavour = cms.int32(5),
+    noBBbarResonances = cms.bool(False),
+    genParticles = cms.InputTag("genParticles"),
+    onlyJetClusteredHadrons = cms.bool(False)
+)
+
+
+process.ak4GenJetsCustom = cms.EDProducer("FastjetJetProducer",
+    Active_Area_Repeats = cms.int32(5),
+    doAreaFastjet = cms.bool(False),
+    Ghost_EtaMax = cms.double(6.0),
+    maxBadHcalCells = cms.uint32(9999999),
+    maxRecoveredEcalCells = cms.uint32(9999999),
+    jetType = cms.string('GenJet'),
+    minSeed = cms.uint32(14327),
+    doRhoFastjet = cms.bool(False),
+    jetAlgorithm = cms.string('AntiKt'),
+    nSigmaPU = cms.double(1.0),
+    GhostArea = cms.double(0.01),
+    Rho_EtaMax = cms.double(4.5),
+    maxBadEcalCells = cms.uint32(9999999),
+    useDeterministicSeed = cms.bool(True),
+    doPVCorrection = cms.bool(False),
+    maxRecoveredHcalCells = cms.uint32(9999999),
+    rParam = cms.double(0.4),
+    maxProblematicHcalCells = cms.uint32(9999999),
+    src = cms.InputTag("genParticlesForJetsNoNu"),
+    inputEtMin = cms.double(0.0),
+    srcPVs = cms.InputTag(""),
+    jetPtMin = cms.double(3.0),
+    radiusPU = cms.double(0.5),
+    maxProblematicEcalCells = cms.uint32(9999999),
+    doPUOffsetCorr = cms.bool(False),
+    inputEMin = cms.double(0.0)
+)
+
+
 process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     pythiaPylistVerbosity = cms.untracked.int32(1),
     filterEfficiency = cms.untracked.double(1.0),
@@ -116,6 +185,61 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 )
 
 
+process.ak4GenJets = cms.EDProducer("FastjetJetProducer",
+    Active_Area_Repeats = cms.int32(5),
+    src = cms.InputTag("genParticlesForJets"),
+    useDeterministicSeed = cms.bool(True),
+    doPVCorrection = cms.bool(False),
+    minSeed = cms.uint32(14327),
+    Ghost_EtaMax = cms.double(6.0),
+    doRhoFastjet = cms.bool(False),
+    srcPVs = cms.InputTag(""),
+    inputEtMin = cms.double(0.0),
+    doAreaFastjet = cms.bool(False),
+    nSigmaPU = cms.double(1.0),
+    GhostArea = cms.double(0.01),
+    Rho_EtaMax = cms.double(4.5),
+    jetPtMin = cms.double(3.0),
+    inputEMin = cms.double(0.0),
+    jetType = cms.string('GenJet'),
+    doPUOffsetCorr = cms.bool(False),
+    radiusPU = cms.double(0.5),
+    maxRecoveredHcalCells = cms.uint32(9999999),
+    maxRecoveredEcalCells = cms.uint32(9999999),
+    maxProblematicEcalCells = cms.uint32(9999999),
+    maxBadHcalCells = cms.uint32(9999999),
+    maxBadEcalCells = cms.uint32(9999999),
+    maxProblematicHcalCells = cms.uint32(9999999),
+    jetAlgorithm = cms.string('AntiKt'),
+    rParam = cms.double(0.4)
+)
+
+
+process.genParticlesForJetsNoNu = cms.EDProducer("InputGenJetsParticleSelector",
+    src = cms.InputTag("genParticles"),
+    ignoreParticleIDs = cms.vuint32(1000022, 1000012, 1000014, 1000016, 2000012, 
+        2000014, 2000016, 1000039, 5100039, 4000012, 
+        4000014, 4000016, 9900012, 9900014, 9900016, 
+        39, 12, 14, 16),
+    partonicFinalState = cms.bool(False),
+    excludeResonances = cms.bool(False),
+    excludeFromResonancePids = cms.vuint32(12, 13, 14, 16),
+    tausAsJets = cms.bool(False)
+)
+
+
+process.ak4JetFlavourInfos = cms.EDProducer("JetFlavourClustering",
+    ghostRescaling = cms.double(1e-18),
+    partons = cms.InputTag("selectedHadronsAndPartons","partons"),
+    jetAlgorithm = cms.string('AntiKt'),
+    bHadrons = cms.InputTag("selectedHadronsAndPartons","bHadrons"),
+    rParam = cms.double(0.4),
+    jets = cms.InputTag("ak4PFJets"),
+    hadronFlavourHasPriority = cms.bool(True),
+    cHadrons = cms.InputTag("selectedHadronsAndPartons","cHadrons")
+)
+
+
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
     nEvents = cms.untracked.uint32(#NUMBEREVENTS#),
     outputFile = cms.string('cmsgrid_final.lhe'),
@@ -125,7 +249,7 @@ process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator)
+process.ProductionFilterSequence = cms.Sequence(process.generator+cms.SequencePlaceholder("pgen")+process.selectedHadronsAndPartons+process.genParticlesForJetsNoNu+process.ak4GenJetsCustom+process.genJetFlavourInfos+process.matchGenBHadron+process.ttHFGenFilter)
 
 # Set different random numbers seeds every time one runs cmsRun
 from IOMC.RandomEngine.RandomServiceHelper import RandomNumberServiceHelper
@@ -135,7 +259,7 @@ randSvc.populate()
 
 # Path and EndPath definitions
 process.lhe_step = cms.Path(process.externalLHEProducer)
-process.generation_step = cms.Path(process.pgen)
+process.generation_step = cms.Path(process.ProductionFilterSequence)
 process.simulation_step = cms.Path(process.psim)
 process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
@@ -143,12 +267,7 @@ process.RAWSIMoutput_step = cms.EndPath(process.RAWSIMoutput)
 process.LHEoutput_step = cms.EndPath(process.LHEoutput)
 
 # Schedule definition
-#process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step,process.LHEoutput_step)
-process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step)
-# filter all path with the production filter sequence
-for path in process.paths:
-	if path in ['lhe_step']: continue
-	getattr(process,path)._seq = process.ProductionFilterSequence * getattr(process,path)._seq 
+process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.simulation_step,process.endjob_step,process.RAWSIMoutput_step,process.LHEoutput_step)
 
 # customisation of the process.
 
