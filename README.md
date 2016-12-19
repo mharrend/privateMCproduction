@@ -5,9 +5,13 @@ Private MC production for CMS
 **Note**
 This configuration is using the settings which are used for the Moriond2017 production. 
 
-## Note: T2_Beijing
+## Note: T2_CH_CSCS
 **Note**
-This configuration writes the files to the T3_Beijing storage.
+This configuration writes the files to the T2_CH_CSCS storage.
+
+## Note: TTBB Sample
+**Note**
+This configuration produces ttbb events.
 
 Table of Contents
 =================
