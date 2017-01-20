@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=20
+export NUMBEREVENTS=1000000
 
 # Define workdir
 export WORKDIR=`pwd`
@@ -12,8 +12,8 @@ export GRIDPACKLOC=/afs/cern.ch/work/m/mharrend/public/ttHtranche3/TTToSemiLepto
 # export GRIDPACKLOC=/afs/cern.ch/work/m/mharrend/public/ttHtranche3/TTTo2L2Nu_hvq_ttHtranche3.tgz
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
-#export USECRAB="True"
-export USECRAB="False"
+export USECRAB="True"
+#export USECRAB="False"
 
 ######### Do not change anything behind this line ###############
 
