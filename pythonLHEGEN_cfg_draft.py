@@ -70,6 +70,8 @@ process.LHEoutput = cms.OutputModule("PoolOutputModule",
 
 # Additional output definition
 
+
+
 # Other statements
 process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag

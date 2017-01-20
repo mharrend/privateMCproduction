@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define number of events
-export NUMBEREVENTS=10000000
+export NUMBEREVENTS=20
 
 # Define workdir
 export WORKDIR=`pwd`
@@ -12,8 +12,8 @@ export GRIDPACKLOC=/afs/cern.ch/work/m/mharrend/public/ttHtranche3/TTToSemiLepto
 # export GRIDPACKLOC=/afs/cern.ch/work/m/mharrend/public/ttHtranche3/TTTo2L2Nu_hvq_ttHtranche3.tgz
 
 # Use crab for grid submitting, adjust crabconfig.py accordingly beforehand
-export USECRAB="True"
-#export USECRAB="False"
+#export USECRAB="True"
+export USECRAB="False"
 
 ######### Do not change anything behind this line ###############
 
@@ -31,14 +31,20 @@ echo "Changed into workdir"
 
 echo "Install CMSSW in workdir"
 source /cvmfs/cms.cern.ch/cmsset_default.sh 
-scram project CMSSW_7_1_25
-cd CMSSW_7_1_25/src
-eval `scramv1 runtime -sh`
-echo "Loaded CMSSW_7_1_25"
+scram p CMSSW CMSSW_7_1_25_patch1
+
+cd CMSSW_7_1_25_patch1/src
+eval `scram runtime -sh`
+echo "Loaded CMSSW_7_1_25_patch1"
+#git cms-addpkg PhysicsTools/JetMCAlgos
+#git cms-addpkg RecoJets/Configuration
+#git cms-addpkg RecoJets/JetProducers
 
 echo "Copy run script to workdir"
 mkdir -p GeneratorInterface/LHEInterface/data/
 cp $STARTDIR/run_generic_tarball_cvmfs.sh GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh
+
+
 
 echo "Change number of events in python config to"
 echo $NUMBEREVENTS
